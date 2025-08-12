@@ -15,12 +15,13 @@ const today = new Date();
 
 const calendar = {
   weekday: "long",
-  day: "numeric",
+  year: "numeric",
   month: "long",
+  day: "numeric",
 };
 
 document.querySelector(".date").innerHTML = today.toLocaleString(
-  "pt-BR",
+  "en-US",
   calendar
 );
 

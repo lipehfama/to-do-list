@@ -15,40 +15,41 @@
   </header>
   <main class="task-container">
     <form id="task-form">
-      <h4>Adicione sua tarefa</h4>
+      <h4>Add your task</h4>
       <div class="form-control">
-        <input type="text" id="task-input" placeholder="O que vai fazer ?" />
+        <input type="text" id="task-input" placeholder="What are you going to do?
+" />
         <button type="submit">
           <i class="fa-solid fa-plus"></i>
         </button>
       </div>
     </form>
     <form id="edit-form" class="hide">
-      <h4>Edite sua tarefa</h4>
+      <h4>Edit your task</h4>
       <div class="form-control">
         <input type="text" id="edit-input">
         <button type="submit">
           <i class="fa-solid fa-check-double"></i>
         </button>
       </div>
-      <button id="cancel-edit-btn">Cancelar</button>
+      <button id="cancel-edit-btn">Cancel</button>
     </form>
     <section id="toolbar">
       <div id="search">
-        <h4>Pesquisar:</h4>
+        <h4>Search:</h4>
         <form>
-          <input type="text" id="search-input" placeholder="Buscar..." />
+          <input type="text" id="search-input" placeholder="Search..." />
           <button id="erase-button">
             <i class="fa-solid fa-delete-left"></i>
           </button>
         </form>
       </div>
       <div id="filter">
-        <h4>Filtrar:</h4>
+        <h4>Filter:</h4>
         <select id="filter-select">
-          <option value="all">Todos</option>
-          <option value="done">Feitos</option>
-          <option value="todo">Fazer</option>
+          <option value="all">All</option>
+          <option value="done">Done</option>
+          <option value="todo">To Do</option>
         </select>
       </div>
     </section>
