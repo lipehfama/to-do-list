@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap");
 
-*, 
-*::after, 
+*,
+*::after,
 *::before {
   margin: 0;
   padding: 0;
@@ -13,13 +13,13 @@ body {
   background-repeat: repeat-y;
   background-position: center;
   background-size: cover;
-  color: #45B39D;
-  font-family: 'Ubuntu', sans-serif;
+  color: #45b39d;
+  font-family: "Ubuntu", sans-serif;
   height: 100vh;
 }
 
 button {
-  background-color: #7D3C98;
+  background-color: #7d3c98;
   border-radius: 0.5rem;
   color: #abc1e3;
   cursor: pointer;
@@ -29,12 +29,12 @@ button {
   font-size: 1rem;
   padding: 0.5rem 0.5rem;
   transition: 0.3s;
-  border: 1px solid #45B39D;;
+  border: 1px solid #45b39d;
 }
 
 button:hover {
-  background-color: #AF7AC5;
-  color: #1D1B1A;
+  background-color: #af7ac5;
+  color: #1d1b1a;
 }
 
 header {
@@ -44,9 +44,9 @@ header {
 }
 
 .task-container {
-  background-color: #1D1B1A;
+  background-color: #1d1b1a;
   border-radius: 0.5rem;
-  border: 2px solid #45B39D;
+  border: 2px solid #45b39d;
   max-width: 29rem;
   margin: 0 auto;
   padding: 1.5rem;
@@ -62,15 +62,17 @@ header {
   border-bottom: 1px solid #ccc;
 }
 
-#task-form h4,
-#edit-form h4,
-#toolbar h4 {
+#task-form h2,
+#edit-form h3,
+#toolbar h3,
+h4 {
   margin-bottom: 0.5rem;
   font-weight: bold;
+  font-size: 1rem;
 }
 
 .hide {
- display: none;
+  display: none;
 }
 
 .form-control {
