@@ -1,0 +1,9 @@
+export const taskForm = document.querySelector("#task-form");
+export const taskInput = document.querySelector("#task-input");
+export const taskList = document.querySelector("#task-list");
+export const editForm = document.querySelector("#edit-form");
+export const editInput = document.querySelector("#edit-input");
+export const cancelEditBtn = document.querySelector("#cancel-edit-btn");
+export const searchInput = document.querySelector("#search-input");
+export const eraseBtn = document.querySelector("#erase-button");
+export const filterBtn = document.querySelector("#filter-select");
