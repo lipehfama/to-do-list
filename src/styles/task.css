@@ -1,0 +1,22 @@
+/*Task-list*/
+.todo {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+  margin-block: 1rem;
+  padding: 1rem 1.5rem;
+}
+
+.todo h4 {
+  flex: 1;
+}
+
+.todo button {
+  margin-left: 0.5rem;
+}
+
+.done {
+  background-color: #38384091;
+  border-radius: 0.5rem;
+}

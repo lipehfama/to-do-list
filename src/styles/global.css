@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap");
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url(../assets/background.png);
+  background-repeat: repeat-y;
+  background-position: center;
+  background-size: cover;
+  color: #45b39d;
+  font-family: "Ubuntu", sans-serif;
+  height: 100vh;
+}
+
+button {
+  background-color: #7d3c98;
+  border-radius: 0.5rem;
+  color: #abc1e3;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  padding: 0.5rem 0.5rem;
+  transition: 0.3s;
+  border: 1px solid #45b39d;
+}
+
+button:hover {
+  background-color: #af7ac5;
+  color: #1d1b1a;
+}
+
+header {
+  color: #ccc;
+  text-align: center;
+  padding: 1rem 1rem 0;
+}
+
+.task-container {
+  background-color: #1d1b1a;
+  border-radius: 0.5rem;
+  border: 2px solid #45b39d;
+  max-width: 29rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+  position: relative;
+  top: 2rem;
+}

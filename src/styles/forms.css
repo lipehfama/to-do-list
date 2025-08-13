@@ -1,0 +1,42 @@
+/*Forms*/
+#task-form,
+#edit-form,
+#toolbar {
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+#task-form h2,
+#edit-form h3,
+#toolbar h3,
+h4 {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.hide {
+  display: none;
+}
+
+.form-control {
+  display: flex;
+}
+
+.form-control input {
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  width: 14rem;
+}
+
+#toolbar {
+  display: flex;
+}
+
+#cancel-edit-btn {
+  font-weight: 700;
+  margin-top: 1rem;
+}
