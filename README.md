@@ -1,6 +1,6 @@
 # to-do-list
 
-![to-do-list](https://user-images.githubusercontent.com/91050670/194682547-75054b12-79f9-4dea-acdd-6bae33a521a5.png)
+![to-do-list](https://github.com/user-attachments/assets/fa4636ac-6eec-4982-a40e-f8ee45cb60fc)
 
 ## :wrench: Technologies Used
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
