@@ -22,7 +22,9 @@
       integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer" />
-    <script type="module" src="/src/js/main.js" defer></script>
+    <script defer type="module" src="/src/js/main.js"></script>
+    <script defer type="module" src="https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js"></script>
+    <script defer type="module" src="https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js"></script>
   </head>
   <body>
     <header>
@@ -35,8 +37,8 @@
           <input
             type="text"
             id="task-input"
-            placeholder="What are you going to do?
-" />
+            placeholder="What are you going to do?" 
+          />
           <button type="submit" aria-label="add-task">
             <i class="fa-solid fa-plus"></i>
           </button>
