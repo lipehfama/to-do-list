@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore,collection,addDoc,onSnapshot,getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -13,7 +13,15 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 
+export const db = getFirestore(app);
 
-const db = getFirestore(app);
+export async function testFirestore() {
+   try {
+    console.log("🔥 Firebase initialized successfully");
+    console.log("🔥 Firestore connected");
+  } catch (e) {
+    console.error("❌ Error connecting to Firebase:", e);
+  }
+}
 
-//console.log("Firebase connected:", app);
+testFirestore();
