@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore,collection,addDoc,onSnapshot,getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+//Firebase configuration
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -15,6 +16,7 @@ export const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
 
+// Test Firestore connection
 export async function testFirestore() {
    try {
     console.log("🔥 Firebase initialized successfully");
