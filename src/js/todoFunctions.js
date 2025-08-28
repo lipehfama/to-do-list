@@ -3,7 +3,7 @@ import { saveTodoLocalStorage, updateTodoLocalStorage } from "./storage";
 
 let oldInputValue;
 //Functions
-export const saveTodo = (text, done = 0, save = 1) => {
+export const saveTodo = async (text, done = 0, save = 1) => {
   const todo = document.createElement("div");
   todo.classList.add("todo");
 
@@ -33,11 +33,21 @@ export const saveTodo = (text, done = 0, save = 1) => {
     todo.classList.add("done");
   }
 
+  taskList.appendChild(todo);
+
   if (save) {
-    saveTodoLocalStorage({ text, done: 0 });
+    try {
+      const id = await saveTodoLocalStorage({ text, done: 0 });
+      // Store the Firestore document ID in the DOM element
+      todo.setAttribute("data-id", id);
+    } catch (error) {
+      console.error("❌ Failed to save todo to Firestore:", error);
+      // Remove from DOM if Firestore save failed
+      todo.remove();
+      throw error;
+    }
   }
 
-  taskList.appendChild(todo);
   taskInput.value = "";
 };
 
@@ -47,7 +57,7 @@ export const toggleForms = () => {
   taskList.classList.toggle("hide");
 };
 
-export const updateTodo = (text) => {
+export const updateTodo = async (text) => {
   const todos = document.querySelectorAll(".todo");
 
   todos.forEach((todo) => {
