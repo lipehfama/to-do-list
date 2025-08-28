@@ -15,10 +15,13 @@ import {
   updateTodo,
   getSearchedTodos,
   filterTodos,
+  setOldInputValue,
 } from "./todoFunctions";
 
 import {
+  removeTodoById,
   removeTodoLocalStorage,
+  updateTodoStatusById,
   updateTodoStatusLocalStorage,
 } from "./storage";
 
@@ -39,7 +42,7 @@ export function registerEvents() {
     }
   });
 
-  document.addEventListener("click",async (e) => {
+  document.addEventListener("click", async (e) => {
     const targetEl = e.target;
     const parentEl = targetEl.closest("div");
     let todoTitle;
@@ -55,19 +58,44 @@ export function registerEvents() {
 
       //Update Dom immediately for better UX
       parentEl.classList.toggle("done");
-      
-      updateTodoStatusLocalStorage(todoTitle);
+
+      try {
+        if (docId) {
+          // Use ID-based update (more efficient)
+          await updateTodoStatusById(docId, !wasDone);
+        } else {
+          // Fallback to text-based update
+
+          await updateTodoStatusLocalStorage(todoTitle);
+        }
+      } catch (error) {
+        // Revert DOM change if update fails
+        parentEl.classList.toggle("done");
+        console.error("❌ Failed to update todo status:", error);
+        alert("Failed to update todo. Please try again.");
+      }
     }
 
     if (targetEl.classList.contains("edit-todo")) {
       toggleForms();
       editInput.value = todoTitle;
-      oldInputValue = todoTitle;
+      setOldInputValue(todoTitle);
     }
 
     if (targetEl.classList.contains("remove-todo")) {
-      parentEl.remove();
-      removeTodoLocalStorage(todoTitle);
+      try {
+        if (docId) {
+          // Use ID-based deletion
+          await removeTodoById(docId);
+        } else {
+          // Fallback to text-based deletion
+          removeTodoLocalStorage(todoTitle);
+        }
+        parentEl.remove();
+      } catch (error) {
+        console.error("❌ Failed to delete todo:", error);
+        alert("Failed to delete todo. Please try again.");
+      }
     }
   });
 
@@ -76,16 +104,20 @@ export function registerEvents() {
     toggleForms();
   });
 
-  editForm.addEventListener("submit", (e) => {
+  editForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const editInputValue = editInput.value;
+    const editInputValue = editInput.value.trim();
 
     if (editInputValue) {
-      updateTodo(editInputValue);
+      try {
+        await updateTodo(editInputValue);
+        toggleForms();
+      } catch (error) {
+        console.error("❌ Failed to update todo:", error);
+        alert("Failed to update todo. Please try again.");
+      }
     }
-
-    toggleForms();
   });
 
   searchInput.addEventListener("keyup", (e) => {

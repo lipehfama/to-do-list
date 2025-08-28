@@ -60,14 +60,25 @@ export const toggleForms = () => {
 export const updateTodo = async (text) => {
   const todos = document.querySelectorAll(".todo");
 
-  todos.forEach((todo) => {
+  for (const todo of todos) {
     let todoTitle = todo.querySelector("h4");
 
     if (todoTitle.innerText === oldInputValue) {
-      todoTitle.innerText = text;
-      updateTodoLocalStorage(oldInputValue, text);
+      try {
+        // Update in Firestore first
+        await updateTodoLocalStorage(oldInputValue, text);
+
+        // Then update in DOM
+        todoTitle.innerText = text;
+        console.log("✅ Todo updated successfully");
+        break;
+      } catch (error) {
+        console.error("❌ Failed to update todo:", error);
+        // Keep original text if update failed
+        break;
+      }
     }
-  });
+  }
 };
 
 export const getSearchedTodos = (search) => {
@@ -115,4 +126,8 @@ export const filterTodos = (filterValue) => {
     default:
       break;
   }
+};
+
+export const setOldInputValue = (value) => {
+  oldInputValue = value;
 };

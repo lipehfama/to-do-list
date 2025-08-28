@@ -2,8 +2,12 @@ import { displayCurrentDate } from "./date";
 import { loadTodos } from "./storage";
 import { registerEvents } from "./events";
 
-displayCurrentDate();
+function initApp() {
+  displayCurrentDate();
 
-loadTodos();
+  loadTodos();
 
-registerEvents();
+  registerEvents();
+}
+
+initApp();

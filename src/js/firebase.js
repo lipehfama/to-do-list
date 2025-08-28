@@ -40,17 +40,3 @@ export {
   where,
   serverTimestamp,
 };
-
-// Test Firestore connection
-/*
-export async function testFirestore() {
-  try {
-    console.log("🔥 Firebase initialized successfully");
-    console.log("🔥 Firestore connected");
-  } catch (e) {
-    console.error("❌ Error connecting to Firebase:", e);
-  }
-}
-
-testFirestore();
-*/
