@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import {
   getFirestore,
   collection,
+  doc,
   addDoc,
   updateDoc,
   deleteDoc,
@@ -29,6 +30,7 @@ export const db = getFirestore(app);
 
 export {
   collection,
+  doc,
   addDoc,
   updateDoc,
   deleteDoc,

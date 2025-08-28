@@ -24,27 +24,38 @@ import {
 
 //Events
 export function registerEvents() {
-  taskForm.addEventListener("submit", (e) => {
+  taskForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const inputValue = taskInput.value;
 
     if (inputValue) {
-      saveTodo(inputValue);
+      try {
+        await saveTodo(inputValue);
+      } catch (error) {
+        console.error("❌ Failed to save todo:", error);
+        alert("Failed to save todo. Please try again.");
+      }
     }
   });
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click",async (e) => {
     const targetEl = e.target;
     const parentEl = targetEl.closest("div");
     let todoTitle;
+    let docId;
 
     if (parentEl && parentEl.querySelector("h4")) {
       todoTitle = parentEl.querySelector("h4").innerText || "";
+      docId = parentEl.getAttribute("data-doc-id");
     }
 
     if (targetEl.classList.contains("finish-todo")) {
+      const wasDone = parentEl.classList.contains("done");
+
+      //Update Dom immediately for better UX
       parentEl.classList.toggle("done");
+      
       updateTodoStatusLocalStorage(todoTitle);
     }
 

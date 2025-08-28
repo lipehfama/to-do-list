@@ -2,6 +2,7 @@ import { saveTodo } from "./todoFunctions";
 import {
   db,
   collection,
+  doc,
   addDoc,
   updateDoc,
   deleteDoc,
@@ -24,7 +25,7 @@ export const getTodosLocalStorage = async () => {
     querySnapshot.forEach((doc) => {
       todos.push({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       });
     });
 
@@ -36,10 +37,39 @@ export const getTodosLocalStorage = async () => {
 };
 
 export const loadTodos = async () => {
-  const todos = await getTodosLocalStorage();
+  /*
+  const todos = getTodosLocalStorage();
   todos.forEach((todo) => {
     saveTodo(todo.text, todo.done, 0);
   });
+  */
+  try {
+    const todos = await getTodosLocalStorage();
+
+    // Clear existing todos
+    const taskList =
+      document.querySelector("#todo-list") ||
+      document.querySelector(".todo-list");
+
+    if (taskList) {
+      taskList.innerHTML = "";
+    }
+
+    //Create Dom elements for each todo
+    for (const todo of todos) {
+      await saveTodo(todo.text, todo.done, 0);
+
+      //Add Firestore document ID to the latest created element
+      const todoElements = document.querySelectorAll(".todo");
+      const lastTodo = todoElements[todoElements.length - 1];
+      if (lastTodo) {
+        lastTodo.setAttribute("data-doc-id", todo.id);
+      }
+      console.log(`✅ Loaded ${todos.length} todos from Firestore`);
+    }
+  } catch (error) {
+    console.error("❌ Error loading todos:", error);
+  }
 };
 
 // Save todo to Firestore
@@ -65,24 +95,92 @@ export const saveTodoLocalStorage = async (todo) => {
   }
 };
 
-export const removeTodoLocalStorage = (todoText) => {
+// Remove todo from Firestore by text
+export const removeTodoLocalStorage = async (todoText) => {
+  /*
   const todos = getTodosLocalStorage();
   const filteredTodos = todos.filter((todo) => todo.text != todoText);
   localStorage.setItem("todos", JSON.stringify(filteredTodos));
+  */
+  try {
+    const q = query(collection(db, "todos"), where("text", "==", todoText));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const docToDelete = querySnapshot.docs[0];
+      console.log(docToDelete);
+      await deleteDoc(doc(db, "todos", docToDelete.id));
+      console.log("✅ Todo deleted from Firestore:", todoText);
+      return docToDelete.id;
+    } else {
+      console.warn("⚠️ Todo not found for deletion:", todoText);
+      return null;
+    }
+  } catch (error) {
+    console.error("❌ Error removing todo from Firestore:", error);
+    throw error;
+  }
 };
 
-export const updateTodoStatusLocalStorage = (todoText) => {
+// Update todo status in Firestore
+export const updateTodoStatusLocalStorage = async (todoText) => {
+  /*
   const todos = getTodosLocalStorage();
   todos.map((todo) =>
     todo.text === todoText ? (todo.done = !todo.done) : null
-  );
-  localStorage.setItem("todos", JSON.stringify(todos));
+);
+localStorage.setItem("todos", JSON.stringify(todos));
+*/
+  try {
+    const q = query(collection(db, "todos"), where("text", "==", todoText));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const todoDoc = querySnapshot.docs[0];
+      const currentData = todoDoc.data();
+
+      await updateDoc(doc(db, "todos", todoDoc.id), {
+        done: !currentData.done,
+        updateAt: serverTimestamp(),
+      });
+
+      console.log("✅ Todo status updated in Firestore:", todoText);
+      return todoDoc.id;
+    } else {
+      console.warn("⚠️ Todo not found for status update:", todoText);
+      return null;
+    }
+  } catch (error) {
+    console.error("❌ Error updating todo status in Firestore:", error);
+    throw error;
+  }
 };
 
-export const updateTodoLocalStorage = (todoOldText, todoNewText) => {
+export const updateTodoLocalStorage = async (todoOldText, todoNewText) => {
+  /*
   const todos = getTodosLocalStorage();
   todos.map((todo) =>
     todo.text === todoOldText ? (todo.text = todoNewText) : null
-  );
-  localStorage.setItem("todos", JSON.stringify(todos));
+);
+   localStorage.setItem("todos", JSON.stringify(todos));
+*/
+  try {
+    const q = query(collection(db, "todos"), where("text", "==", todoOldText));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const todoDoc = querySnapshot.docs[0];
+
+      await updateDoc(doc(db, "todos", todoDoc.id), {
+        text: todoNewText,
+        updateAt: serverTimestamp(),
+      });
+
+      console.log("✅ Todo text updated in Firestore:", todoOldText, "->", todoNewText);
+      return todoDoc.id;
+    }
+  } catch (error) {
+    console.error("❌ Error updating todo text in Firestore:", error);
+    throw error;
+  }
 };
