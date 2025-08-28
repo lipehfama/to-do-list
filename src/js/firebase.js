@@ -16,6 +16,8 @@ export const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
 
+// Test Firestore connection
+/*
 export async function testFirestore() {
   try {
     console.log("🔥 Firebase initialized successfully");
