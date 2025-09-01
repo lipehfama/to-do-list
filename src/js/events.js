@@ -61,15 +61,15 @@ export function registerEvents() {
 
       try {
         if (docId) {
-          // Use ID-based update (more efficient)
+          //Use ID-based update (more efficient)
           await updateTodoStatusById(docId, !wasDone);
         } else {
-          // Fallback to text-based update
+          //Fallback to text-based update
 
           await updateTodoStatusLocalStorage(todoTitle);
         }
       } catch (error) {
-        // Revert DOM change if update fails
+        //Revert DOM change if update fails
         parentEl.classList.toggle("done");
         console.error("❌ Failed to update todo status:", error);
         alert("Failed to update todo. Please try again.");
@@ -85,10 +85,10 @@ export function registerEvents() {
     if (targetEl.classList.contains("remove-todo")) {
       try {
         if (docId) {
-          // Use ID-based deletion
+          //Use ID-based deletion
           await removeTodoById(docId);
         } else {
-          // Fallback to text-based deletion
+          //Fallback to text-based deletion
           removeTodoLocalStorage(todoTitle);
         }
         parentEl.remove();

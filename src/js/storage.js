@@ -37,7 +37,7 @@ export const loadTodos = async () => {
   try {
     const todos = await getTodosLocalStorage();
 
-    // Clear existing todos
+    //Clear existing todos
     const taskList =
       document.querySelector("#todo-list") ||
       document.querySelector(".todo-list");
@@ -63,7 +63,7 @@ export const loadTodos = async () => {
   }
 };
 
-// Save todo to Firestore
+//Save todo to Firestore
 export const saveTodoLocalStorage = async (todo) => {
   try {
     const docRef = await addDoc(collection(db, "todos"), {
@@ -80,7 +80,7 @@ export const saveTodoLocalStorage = async (todo) => {
   }
 };
 
-// Remove todo from Firestore by text
+//Remove todo from Firestore by text
 export const removeTodoLocalStorage = async (todoText) => {
   try {
     const q = query(collection(db, "todos"), where("text", "==", todoText));
@@ -102,7 +102,7 @@ export const removeTodoLocalStorage = async (todoText) => {
   }
 };
 
-// Update todo status in Firestore
+//Update todo status in Firestore
 export const updateTodoStatusLocalStorage = async (todoText) => {
   try {
     const q = query(collection(db, "todos"), where("text", "==", todoText));
@@ -156,7 +156,7 @@ export const updateTodoLocalStorage = async (todoOldText, todoNewText) => {
   }
 };
 
-// Helper functions using document ID
+//Helper functions using document ID
 export const removeTodoById = async (docId) => {
   try {
     await deleteDoc(doc(db, "todos", docId));

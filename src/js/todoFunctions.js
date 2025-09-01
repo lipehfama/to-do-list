@@ -38,11 +38,11 @@ export const saveTodo = async (text, done = 0, save = 1) => {
   if (save) {
     try {
       const id = await saveTodoLocalStorage({ text, done: 0 });
-      // Store the Firestore document ID in the DOM element
+      //Store the Firestore document ID in the DOM element
       todo.setAttribute("data-id", id);
     } catch (error) {
       console.error("❌ Failed to save todo to Firestore:", error);
-      // Remove from DOM if Firestore save failed
+      //Remove from DOM if Firestore save failed
       todo.remove();
       throw error;
     }
@@ -65,16 +65,16 @@ export const updateTodo = async (text) => {
 
     if (todoTitle.innerText === oldInputValue) {
       try {
-        // Update in Firestore first
+        //Update in Firestore first
         await updateTodoLocalStorage(oldInputValue, text);
 
-        // Then update in DOM
+        //Then update in DOM
         todoTitle.innerText = text;
         console.log("✅ Todo updated successfully");
         break;
       } catch (error) {
         console.error("❌ Failed to update todo:", error);
-        // Keep original text if update failed
+        //Keep original text if update failed
         break;
       }
     }
