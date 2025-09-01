@@ -18,9 +18,28 @@ function generateDeviceId() {
 
 //Get or create the device ID
 export function getDeviceId() {
-    let deviceId = localStorage.getItem(DEVICE_ID_KEY);
-    if(!deviceId) {
-        deviceId = generateDeviceId();
+  let deviceId = localStorage.getItem(DEVICE_ID_KEY);
+  if (!deviceId) {
+    deviceId = generateDeviceId();
+    localStorage.setItem(DEVICE_ID_KEY, deviceId);
+    console.log("🆔 New device ID created:", deviceId);
+  }
 
-    }
+  return deviceId;
+}
+
+//Reset device ID (useful for testing or privacy)
+export function resetDeviceId() {
+  localStorage.removeItem(DEVICE_ID_KEY);
+  console.log("🆔 Device ID reset");
+  return getDeviceId();
+}
+
+//Get device info for debugging
+export function getDeviceIdInfo() {
+  return {
+    deviceId: getDeviceId(),
+    userAgent: navigator.userAgent,
+    timestamp: new Date().toISOString(),
+  };
 }

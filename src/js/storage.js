@@ -1,4 +1,5 @@
 import { saveTodo } from "./todoFunctions";
+import { getDeviceId } from "./deviceId";
 import {
   db,
   collection,
@@ -16,7 +17,10 @@ import {
 //Get all todos from Firestore
 export const getTodosLocalStorage = async () => {
   try {
-    const querySnapshot = await getDocs(collection(db, "todos"));
+    const deviceId = getDeviceId();
+    //Query only todos for this device
+    const q = query(collection(db, "todos"), where("deviceId", "==", deviceId));
+    const querySnapshot = await getDocs(q);
     const todos = [];
 
     querySnapshot.forEach((doc) => {
@@ -26,6 +30,7 @@ export const getTodosLocalStorage = async () => {
       });
     });
 
+    console.log(`📱 Found ${todos.length} todos for device: ${deviceId}`);
     return todos;
   } catch (error) {
     console.error("❌ Error getting todos from Firestore:", error);
@@ -66,13 +71,15 @@ export const loadTodos = async () => {
 //Save todo to Firestore
 export const saveTodoLocalStorage = async (todo) => {
   try {
+    const deviceId = getDeviceId();
     const docRef = await addDoc(collection(db, "todos"), {
       text: todo.text,
       done: todo.done || false,
+      deviceId: deviceId,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });
-    console.log("✅ Todo saved to Firestore with ID:", docRef.id);
+    console.log(`✅ Todo saved for device ${deviceId} with ID:`, docRef.id);
     return docRef.id;
   } catch (error) {
     console.log("❌ Error saving todo to firestore:", error);
@@ -83,7 +90,12 @@ export const saveTodoLocalStorage = async (todo) => {
 //Remove todo from Firestore by text
 export const removeTodoLocalStorage = async (todoText) => {
   try {
-    const q = query(collection(db, "todos"), where("text", "==", todoText));
+    const deviceId = getDeviceId();
+    const q = query(
+      collection(db, "todos"),
+      where("text", "==", todoText),
+      where("deviceId", "==", deviceId)
+    );
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
@@ -105,7 +117,12 @@ export const removeTodoLocalStorage = async (todoText) => {
 //Update todo status in Firestore
 export const updateTodoStatusLocalStorage = async (todoText) => {
   try {
-    const q = query(collection(db, "todos"), where("text", "==", todoText));
+    const deviceId = getDeviceId();
+    const q = query(
+      collection(db, "todos"),
+      where("text", "==", todoText),
+      where("deviceId", "==", deviceId)
+    );
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
@@ -114,6 +131,7 @@ export const updateTodoStatusLocalStorage = async (todoText) => {
 
       await updateDoc(doc(db, "todos", todoDoc.id), {
         done: !currentData.done,
+        deviceId: deviceId,
         updateAt: serverTimestamp(),
       });
 
@@ -131,7 +149,12 @@ export const updateTodoStatusLocalStorage = async (todoText) => {
 
 export const updateTodoLocalStorage = async (todoOldText, todoNewText) => {
   try {
-    const q = query(collection(db, "todos"), where("text", "==", todoOldText));
+    const deviceId = getDeviceId();
+    const q = query(
+      collection(db, "todos"),
+      where("text", "==", todoOldText),
+      where("deviceId", "==", deviceId)
+    );
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
@@ -139,6 +162,7 @@ export const updateTodoLocalStorage = async (todoOldText, todoNewText) => {
 
       await updateDoc(doc(db, "todos", todoDoc.id), {
         text: todoNewText,
+        deviceId: deviceId,
         updateAt: serverTimestamp(),
       });
 
@@ -149,6 +173,9 @@ export const updateTodoLocalStorage = async (todoOldText, todoNewText) => {
         todoNewText
       );
       return todoDoc.id;
+    } else {
+      console.warn("⚠️ Todo not found for text update:", todoOldText);
+      return null;
     }
   } catch (error) {
     console.error("❌ Error updating todo text in Firestore:", error);
@@ -159,6 +186,11 @@ export const updateTodoLocalStorage = async (todoOldText, todoNewText) => {
 //Helper functions using document ID
 export const removeTodoById = async (docId) => {
   try {
+    const deviceId = getDeviceId();
+    // Update with device ID to ensure security rules pass
+    await updateDoc(doc(db, "todos", docId), {
+      deviceId: deviceId,
+    });
     await deleteDoc(doc(db, "todos", docId));
     console.log("✅ Todo deleted by ID:", docId);
   } catch (error) {
