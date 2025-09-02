@@ -7,6 +7,8 @@
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![Javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![Firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![Pnpm](https://img.shields.io/badge/pnpm-yellow?style=for-the-badge&logo=pnpm&logoColor=white)
 
 ## :book: Project Information
 - To-do list
@@ -18,6 +20,9 @@
 - Config Firestore Database
 - Save todos in cloud firebase
 - All saved with their userId
+- Application conversion to PWA
+- Documentation Link: [Vite Pwa](https://vite-pwa-org.netlify.app)
+
 
 ## :bulb:	Autor: FelipeFama
    My links:
