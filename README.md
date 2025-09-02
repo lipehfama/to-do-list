@@ -15,6 +15,7 @@
 - Using localStorage
 - CSS Flexbox
 - Firebase Integration
+- Config Firestore Database
 - Save todos in cloud firebase
 - All saved with their userId
 
