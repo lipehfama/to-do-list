@@ -6,6 +6,7 @@
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![Javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
 
 ## :book: Project Information
 - To-do list
@@ -13,6 +14,9 @@
 - DOM manipulation
 - Using localStorage
 - CSS Flexbox
+- Firebase Integration
+- Save todos in cloud firebase
+- All saved with their userId
 
 ## :bulb:	Autor: FelipeFama
    My links:
